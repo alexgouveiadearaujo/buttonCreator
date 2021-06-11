@@ -7,7 +7,7 @@ range.forEach(i=>{
     i.value = 0;
 });
 
-// controles.addEventListener('change' , handleChange);
+
 controls.addEventListener('input' , handleChange);
 
 const handleStyle = {
@@ -46,11 +46,23 @@ function handleChange(e) {
     const value = e.target.value;
     handleStyle[name](value);
     showCss();
-     // console.log(name);
-    // console.log(value);
+    saveValues(name,value);
+
 }
 
 function showCss(){
     cssTxt.innerHTML = '<span>' + btn.style.cssText.split('; ').join(';</span><span>');
-    console.log('<span>' + btn.style.cssText.split('; ').join(';</span><span>'));
 }
+
+function saveValues(name , value){
+    localStorage[name] = value;
+}
+function setValues(){
+    const properties = Object.keys(localStorage);
+    properties.forEach(i =>{
+        handleStyle[i](localStorage[i]);
+        controls.elements[i].value = localStorage[i];
+    })
+    showCss();
+}
+setValues();
